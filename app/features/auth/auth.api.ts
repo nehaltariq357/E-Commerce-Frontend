@@ -17,3 +17,18 @@ return api<LoginResponse>("/auth/login",{
     body: JSON.stringify(credentials),
 })
 }
+interface MeResponse { success: boolean; message: string; data: User; }
+// get current user
+
+export const getCurrentUser = async()=>{
+    return api<MeResponse>("/auth/me")
+}
+
+// refresh function
+
+export const refreshAccessToken = async()=>{
+  return api("/auth/refresh",{
+    method:"POST"
+  })
+
+}
