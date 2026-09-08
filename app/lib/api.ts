@@ -2,7 +2,7 @@
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL 
 
-type ApiOptions = RequestInit & {
+type ApiOptions =Omit <RequestInit,"body"> & {
   body?: unknown;
 };
 
@@ -24,7 +24,7 @@ export const api = async <T = unknown>(
       },
 
       body:
-        options.body &&
+        options.body !== undefined &&
         typeof options.body !== "string"
           ? JSON.stringify(options.body)
           : options.body,
