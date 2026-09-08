@@ -3,18 +3,33 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getProductById } from "../../components/product/product.api";
 import { Product } from "../../components/product/product.type";
+import { addToCart } from "../../features/cart/cart.api";
+import {
+  addCartItem,
+  updateCartItemState,
+} from "../../features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 export default function ProductDetailPage() {
   const params = useParams();
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector((state) => state.cart.cart);
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [quantity, setQuantity] = useState(1);
+  const [selectedVariantId, setSelectedVariantId] = useState<
+    number | undefined
+  >(undefined);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
+        setError("");
         const productId = Number(params.id);
         if (Number.isNaN(productId)) {
           throw new Error("Invalid product ID");
@@ -31,6 +46,50 @@ export default function ProductDetailPage() {
     };
     fetchProduct();
   }, [params.id]);
+
+  // handle add to cart
+  const handleAddToCart = async () => {
+    if (!product) return;
+    try {
+      setIsAddingToCart(true);
+      setError("");
+      // if user has variants, user must select one
+      if (
+        product.productVariants &&
+        product.productVariants.length > 0 &&
+        !selectedVariantId
+      ) {
+        throw new Error("Please select a product variant");
+      }
+
+      const response = await addToCart({
+        productId: product.id,
+        variantId: selectedVariantId,
+        quantity,
+      });
+
+      const cartItem = response.data;
+
+      // check if item exists in redux
+
+      const existingItem = cart?.cartItems.find(
+        (item) => item.id === cartItem.id,
+      );
+      if (existingItem) {
+        dispatch(updateCartItemState(cartItem));
+      } else {
+        dispatch(addCartItem(cartItem));
+      }
+      alert("Product added to cart successfully");
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Failed to add to cart",
+      );
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -42,6 +101,7 @@ export default function ProductDetailPage() {
   }
 
   const image = product.productImages?.[0]?.imageUrl;
+
   return (
     <main className="mx-auto max-w-7xl px-4 py-10">
       {" "}
@@ -79,49 +139,61 @@ export default function ProductDetailPage() {
             {product.description}{" "}
           </p>{" "}
           {/* Variants */}{" "}
-          {(product.productVariants?.length ?? 0) > 0 && (
+          {product.productVariants && product.productVariants.length > 0 && (
             <div className="mt-8">
               {" "}
               <h2 className="mb-3 text-lg font-semibold">
                 {" "}
-                Available Variants{" "}
+                Select Variant{" "}
               </h2>{" "}
-              <div className="space-y-3">
+              <div className="flex flex-wrap gap-3">
                 {" "}
-                {product.productVariants?.map((variant) => (
-                  <div key={variant.id} className="rounded-lg border p-4">
+                {product.productVariants.map((variant) => (
+                  <button
+                    key={variant.id}
+                    type="button"
+                    onClick={() => setSelectedVariantId(variant.id)}
+                    disabled={variant.stock === 0}
+                    className={`rounded-lg border px-4 py-2 transition ${selectedVariantId === variant.id ? "border-black bg-black text-white" : "bg-white"} ${variant.stock === 0 ? "cursor-not-allowed opacity-50" : ""}`}
+                  >
                     {" "}
-                    <p>
+                    {variant.size && <span>{variant.size} </span>}{" "}
+                    {variant.color && <span>{variant.color}</span>}{" "}
+                    {!variant.size && !variant.color && variant.sku}{" "}
+                    <span className="ml-2 text-xs">
                       {" "}
-                      <strong>SKU:</strong> {variant.sku}{" "}
-                    </p>{" "}
-                    {variant.size && (
-                      <p>
-                        {" "}
-                        <strong>Size:</strong> {variant.size}{" "}
-                      </p>
-                    )}{" "}
-                    {variant.color && (
-                      <p>
-                        {" "}
-                        <strong>Color:</strong> {variant.color}{" "}
-                      </p>
-                    )}{" "}
-                    <p>
-                      {" "}
-                      <strong>Stock:</strong> {variant.stock}{" "}
-                    </p>{" "}
-                  </div>
+                      ({variant.stock} left){" "}
+                    </span>{" "}
+                  </button>
                 ))}{" "}
               </div>{" "}
             </div>
           )}{" "}
+          {/* Quantity */}{" "}
+          <div className="mt-6">
+            {" "}
+            <label className="mb-2 block font-medium"> Quantity </label>{" "}
+            <input
+              type="number"
+              min={1}
+              value={quantity}
+              onChange={(event) =>
+                setQuantity(Math.max(1, Number(event.target.value)))
+              }
+              className="w-24 rounded-lg border px-3 py-2"
+            />{" "}
+          </div>{" "}
+          {/* Error */}{" "}
+          {error && <p className="mt-4 text-sm text-red-500"> {error} </p>}{" "}
+          {/* Add to Cart */}{" "}
           <button
             type="button"
-            className="mt-8 rounded-lg bg-black px-6 py-3 font-medium text-white transition hover:bg-gray-800"
+            onClick={handleAddToCart}
+            disabled={isAddingToCart}
+            className="mt-8 rounded-lg bg-black px-6 py-3 font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {" "}
-            Add to Cart{" "}
+            {isAddingToCart ? "Adding..." : "Add to Cart"}{" "}
           </button>{" "}
         </div>{" "}
       </div>{" "}

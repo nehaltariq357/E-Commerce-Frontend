@@ -27,7 +27,7 @@ const cartSlice = createSlice({
     },
 
     // add product to cart
-    addToCart: (state, action: PayloadAction<CartItem>) => {
+    addCartItem: (state, action: PayloadAction<CartItem>) => {
       if (!state.cart) return; // if cart is null, return
       state.cart.cartItems.push(action.payload);
     },
@@ -67,9 +67,12 @@ const cartSlice = createSlice({
 });
 
 export const {
-  addToCart,
+  addCartItem,
   clearCartState,
   removeFromCart,
   updateCartItemState,
+  setLoading,
+  clearCart,
+  setCart
 } = cartSlice.actions; // for components
 export default cartSlice.reducer; // for store

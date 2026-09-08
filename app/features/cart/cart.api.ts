@@ -20,6 +20,10 @@ interface MessageResponse {
   success: boolean;
   message: string;
 }
+// Get current user's cart
+export const getCart = async () => {
+  return api<CartResponse>("/cart");
+};
 
 // add product to cart
 
