@@ -5,11 +5,11 @@ import {
   createAddress,
   updateAddress,
   deleteAddress,
+  getAddress
 } from "../../features/address/address.api";
 import {
-  addAddressState,
   updateAddressState,
-  removeAddressState,
+  setAddresses
 } from "../../features/address/addressSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
@@ -44,9 +44,13 @@ export const AddressPage = () => {
         dispatch(updateAddressState(response.data));
       } else {
         // create new address
-        const response = await createAddress(data as CreatedAddressInput);
-        dispatch(addAddressState(response.data));
+        await createAddress(data as CreatedAddressInput);
+
       }
+      const response = await getAddress()
+      // redux store
+      dispatch(setAddresses(response.data))
+      // close form
       setShowForm(false);
       setEditingAddress(null);
     } catch (error) {
@@ -70,7 +74,10 @@ export const AddressPage = () => {
     if (!confirmed) return;
     try {
       await deleteAddress(addressId);
-      dispatch(removeAddressState(addressId));
+      // get fresh addresses from the backend
+      const response = await getAddress()
+      // sync with redux store
+      dispatch(setAddresses(response.data))
     } catch (error) {
       console.error("Failed to delete address:", error);
     }
@@ -79,10 +86,18 @@ export const AddressPage = () => {
   // set default
   const handleSetDefault = async (addressId: number) => {
     try {
-      /* * Backend automatically makes the * previous default address false. */ await updateAddress(
+      /* * Backend automatically makes the * previous default address false. */
+      await updateAddress(
         addressId,
         { isDefault: true },
-      ); /* * Fetching all addresses again would be * the safest approach because another * address also changed. * * We'll handle that in the next * improvement. */
+      );
+      // get fresh addresses from the backend
+
+      const response = await getAddress()
+
+      // redux store
+      dispatch(setAddresses(response.data))
+
     } catch (error) {
       console.error("Failed to set default address:", error);
     }

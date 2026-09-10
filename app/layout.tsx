@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { AuthInitializer } from "./components/auth/AuthInitializer"
 import { CartInitializer } from "./components/cart/CartInitializer";
 
 const geistSans = Geist({
@@ -29,7 +30,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Providers>
           <CartInitializer />
-          {children}
+          <AuthInitializer>
+            {children}
+          </AuthInitializer>
         </Providers>
       </body>
     </html>
