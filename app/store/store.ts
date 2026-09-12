@@ -4,12 +4,14 @@ import authReducer from '../features/auth/authSlice'
 import cartReduce from "../features/cart/cartSlice"
 import addressReducer from "../features/address/addressSlice"
 import orderReducer from "../features/order/orderSlice"
+import adminOrderReducer from "../features/admin-order/admin-orderSlice"
 export const store = configureStore({
     reducer: {
         auth:authReducer,
         cart:cartReduce,
         address:addressReducer,
-        order:orderReducer
+        order:orderReducer,
+        adminOrder:adminOrderReducer
     },
 })
 
