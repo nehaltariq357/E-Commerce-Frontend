@@ -44,7 +44,10 @@ export const AddressPage = () => {
         dispatch(updateAddressState(response.data));
       } else {
         // create new address
-        await createAddress(data as CreatedAddressInput);
+        // await createAddress(data as CreatedAddressInput);
+        const response = await createAddress(data as CreatedAddressInput);
+
+        console.log("CREATE ADDRESS RESPONSE:", response);
 
       }
       const response = await getAddress()

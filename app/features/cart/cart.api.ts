@@ -41,7 +41,7 @@ export const updateCartItem = async (
   data: UpdateCartItemInput,
 ) => {
   return api<CartItemResponse>(`/cart/items/${cartItemId}`, {
-    method: "PUT",
+    method: "PATCH",
     body: data,
   });
 };

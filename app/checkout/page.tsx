@@ -5,8 +5,10 @@ import {useRouter} from "next/navigation"
 import{createOrder} from "../features/order/order.api"
 import {addOrder} from "../features/order/orderSlice"
 import {clearCartState} from "../features/cart/cartSlice"
+import {getAddress} from "../features/address/address.api"
+import {setAddresses} from "../features/address/addressSlice"
+export default function CheckoutPage() {
 
-export const CheckoutPage = () => {
   const cart = useAppSelector((state) => state.cart.cart);
   const addresses = useAppSelector((state) => state.address.addresses);
   const dispatch = useAppDispatch()
@@ -14,9 +16,27 @@ export const CheckoutPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  // default address
+  
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
+useEffect(() => {
+  const loadAddresses = async () => {
+    try {
+      const response = await getAddress();
+      console.log("ADDRESS RESPONSE:", response);
+      dispatch(setAddresses(response.data));
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Failed to load addresses",
+      );
+    }
+  };
 
+  loadAddresses();
+}, [dispatch]);
+
+// set default address
   useEffect(() => {
     const defaultAddress = addresses.find((address)=>address.isDefault)
     if(defaultAddress){

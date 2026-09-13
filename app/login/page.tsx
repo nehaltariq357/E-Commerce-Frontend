@@ -27,10 +27,12 @@ const LoginPage = () => {
       //redirect based on role
 
       if (response.data.role === "ADMIN") {
-        router.push("/admin/dashboard");
+        router.push("/admin/orders");
       } else {
+        alert("Login successful");
         router.push("/");
       }
+      console.log()
     } catch (error) {
       setError(error instanceof Error ? error.message : "Login failed");
     } finally {

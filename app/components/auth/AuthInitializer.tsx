@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../store/hooks";
-import { setUser, logout } from "../../features/auth/authSlice";
+import { setUser, setLogout } from "../../features/auth/authSlice";
 import { getCurrentUser, refreshAccessToken } from "../../features/auth/auth.api";
 
 
@@ -28,14 +28,14 @@ export const AuthInitializer = ({ children }: { children: React.ReactNode }) => 
                     dispatch(setUser(response.data));
                 } catch {
                     //  Refresh fail
-                    dispatch(logout());
+                    dispatch(setLogout());
                 }
             } finally {
                 setLoading(false);
             }
         };
         checkAuthentication()
-    }, [dispatch])
+    }, [dispatch, setLoading])
 
     if (loading) {
         return <div>Loading...</div>

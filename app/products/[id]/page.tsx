@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import {useRouter} from "next/navigation"
 import { getProductById } from "../../components/product/product.api";
 import { Product } from "../../components/product/product.type";
 import { addToCart } from "../../features/cart/cart.api";
@@ -12,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 export default function ProductDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart.cart);
 
@@ -81,6 +83,7 @@ export default function ProductDetailPage() {
         dispatch(addCartItem(cartItem));
       }
       alert("Product added to cart successfully");
+      router.push("/cart");
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "Failed to add to cart",

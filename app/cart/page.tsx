@@ -11,8 +11,9 @@ import {
   removeFromCart,
   clearCartState,
 } from "../features/cart/cartSlice";
-
-export const CartPage = () => {
+import {useRouter} from "next/navigation"
+export default function CartPage() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart.cart);
   const [loading, setLoading] = useState(false);
@@ -133,7 +134,7 @@ export const CartPage = () => {
               {" "}
               <button
                 type="button"
-                disabled={isLoading || item.quantity <= 1}
+                disabled={loading || item.quantity <= 1}
                 onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
                 className="h-9 w-9 rounded border hover:bg-gray-100 disabled:opacity-50"
               >
@@ -185,6 +186,7 @@ export const CartPage = () => {
           </div>{" "}
           <button
             type="button"
+            onClick={()=>router.push("/checkout")}
             className="mt-6 w-full rounded-lg bg-black px-6 py-3 font-medium text-white hover:bg-gray-800"
           >
             {" "}

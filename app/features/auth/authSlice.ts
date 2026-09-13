@@ -18,7 +18,7 @@ const authSlice = createSlice({
         state.isLoading = false
       },
 
-      logout:(state)=>{
+      setLogout:(state)=>{
         state.user = null,
         state.isAuthenticated = false,
         state.isLoading = false
@@ -30,5 +30,5 @@ const authSlice = createSlice({
     }
 })
 
-export const {logout,setLoading,setUser} = authSlice.actions // for components use
+export const {setLogout,setLoading,setUser} = authSlice.actions // for components use
 export default authSlice.reducer // for store

@@ -32,3 +32,10 @@ export const refreshAccessToken = async()=>{
   })
 
 }
+
+// logout function
+export const logout = async()=>{
+  return api("/auth/logout",{
+    method:"POST"
+  })
+}

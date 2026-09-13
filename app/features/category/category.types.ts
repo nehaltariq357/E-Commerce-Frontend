@@ -12,3 +12,20 @@ export interface CategoriesResponse {
   message: string;
   data: Category[];
 }
+
+export interface CategoryInput{
+  name: string;
+  description?: string | undefined;
+  isActive: boolean;
+}
+
+export interface CategoryResponse {
+  success: boolean;
+  message: string;
+  data: Category;
+}
+
+export interface DeleteCategoryResponse {
+  success: boolean;
+  message: string;
+}

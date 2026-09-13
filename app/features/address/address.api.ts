@@ -45,7 +45,7 @@ export const updateAddress = async (
   data: UpdatedAddressInput,
 ) => {
   return api<AddressResponse>(`/addresses/${addressId}`, {
-    method: "PUT",
+    method: "PATCH",
     body: JSON.stringify(data),
   });
 };
