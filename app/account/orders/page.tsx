@@ -5,7 +5,9 @@ import { getMyOrders } from "../../features/order/order.api";
 import { setOrders, setOrderLoading } from "../../features/order/orderSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
-export const OrderPage = () => {
+export default function Orders() {
+  
+
   const dispatch = useAppDispatch();
   const orders = useAppSelector((state) => state.order.orders);
   const isLoading = useAppSelector((state) => state.order.isLoading);

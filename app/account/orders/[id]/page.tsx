@@ -9,7 +9,9 @@ import {
 } from "../../../features/order/orderSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
-export const OrderDetailPage = () => {
+export default function OrderDetails() {
+  
+
   const params = useParams();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -21,6 +23,10 @@ export const OrderDetailPage = () => {
 
   useEffect(() => {
     const loadOrder = async () => {
+
+      console.log("Order ID:", orderId);
+console.log("Params:", params);
+
       if (Number.isNaN(orderId)) {
         setError("Invalid order ID");
         return;
@@ -34,6 +40,8 @@ export const OrderDetailPage = () => {
         setError(
           error instanceof Error ? error.message : "Failed to load order",
         );
+      }finally {
+        dispatch(setOrderLoading(false));
       }
     };
     loadOrder();
@@ -203,7 +211,7 @@ export const OrderDetailPage = () => {
           <div className="rounded-lg border p-6">
             {" "}
             <h2 className="mb-4 font-semibold"> Payment </h2>{" "}
-            {order.payment ? (
+            {order.payments ? (
               <div className="space-y-2 text-sm">
                 {" "}
                 <p>
@@ -211,7 +219,7 @@ export const OrderDetailPage = () => {
                   Method:{" "}
                   <span className="font-medium">
                     {" "}
-                    {order.payment.method}{" "}
+                    {order.payments.method}{" "}
                   </span>{" "}
                 </p>{" "}
                 <p>
@@ -219,12 +227,12 @@ export const OrderDetailPage = () => {
                   Status:{" "}
                   <span className="font-medium">
                     {" "}
-                    {order.payment.status}{" "}
+                    {order.payments.status}{" "}
                   </span>{" "}
                 </p>{" "}
                 <p>
                   {" "}
-                  Amount: $ {Number(order.payment.amount).toFixed(2)}{" "}
+                  Amount: $ {Number(order.payments.amount).toFixed(2)}{" "}
                 </p>{" "}
               </div>
             ) : (

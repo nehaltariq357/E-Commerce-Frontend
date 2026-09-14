@@ -9,7 +9,7 @@ export default function Home() {
  <div>
  {/* test */}
 {/* <AdminCategoriesPage/> */}
-<AdminProductPage/>
+{/* <AdminProductPage/> */}
  </div>
   );
 }

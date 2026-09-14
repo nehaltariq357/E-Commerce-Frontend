@@ -84,7 +84,7 @@ useEffect(() => {
             dispatch(clearCartState())
 
             // go to order page
-            router.push(`/orders/${response.data.id}`)
+            router.push(`/account/orders/${response.data.id}`)
         }catch(error){
             setError(
                 error instanceof Error ? error.message : "Failed to place order",

@@ -15,7 +15,7 @@ export interface Order {
   updatedAt: string;
   address: OrderAddress | null;
   orderItems: OrderItem[];
-  payment: Payment | null;
+  payments: Payment | null;
 }
 
 

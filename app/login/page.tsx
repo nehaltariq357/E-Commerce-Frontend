@@ -25,14 +25,15 @@ const LoginPage = () => {
       // update redux
       dispatch(setUser(response.data));
       //redirect based on role
-
+      console.log("response login page:",response)
       if (response.data.role === "ADMIN") {
         router.push("/admin/orders");
-      } else {
-        alert("Login successful");
-        router.push("/");
+      } else if (response.data.role === "USER") {
+        router.push("/products");
+      }else{
+        router.push("/register");
       }
-      console.log()
+     alert("Login successful");
     } catch (error) {
       setError(error instanceof Error ? error.message : "Login failed");
     } finally {

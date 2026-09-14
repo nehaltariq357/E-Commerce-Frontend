@@ -35,7 +35,7 @@ export const getMyOrders = async()=>{
 // get my order by id
 
 export const getOrderById = async(orderId:number)=>{
-    return api < OrderResponse>(   `/orders/${orderId}`)
+    return api < OrderResponse>(`/orders/${orderId}`)
 }
 
 // cancel order

@@ -1,5 +1,4 @@
 import React from "react";
-import LoginPage from "../login/page";
 import Link from "next/link";
 import LogoutPage from "../logout/page";
 
@@ -8,9 +7,10 @@ const Navbar = () => {
     <div>
       <h1>Navbar</h1>
       <Link href="/login">Login</Link>
-      <button>
+      <Link href="/register">Signup</Link>
+      
         <LogoutPage />
-      </button>
+      
     </div>
   );
 };
