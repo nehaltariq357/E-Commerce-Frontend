@@ -1,4 +1,4 @@
-
+import {ProductImage} from "../../components/product/product.type";
 export interface CartProduct {
   id: number;
   name: string;
@@ -9,6 +9,7 @@ export interface CartProduct {
   categoryId: number | null;
   createdAt: string;
   updatedAt: string;
+  productImages?:ProductImage[]
 }
 
 export interface CartVariant {

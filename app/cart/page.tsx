@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -174,19 +175,50 @@ export default function CartPage() {
                 variants={itemVariants}
                 className="flex flex-col gap-4 overflow-hidden rounded-xl border border-zinc-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between"
               >
-                {/* Product Info */}
-                <div className="min-w-0">
-                  <h2 className="font-semibold text-zinc-900">{item.product.name}</h2>
-                  <p className="mt-1 text-sm text-zinc-500">
-                    ${Number(item.product.price).toFixed(2)}
-                  </p>
-                  {item.variant && (
-                    <div className="mt-1.5 flex flex-wrap gap-x-3 text-sm text-zinc-500">
-                      {item.variant.size && <span>Size: {item.variant.size}</span>}
-                      {item.variant.color && <span>Color: {item.variant.color}</span>}
-                    </div>
-                  )}
-                </div>
+               
+               {/* Product Info */}
+<div className="flex min-w-0 items-center gap-4">
+  {/* Product Image */}
+  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50">
+    {item.product.productImages &&
+    item.product.productImages.length > 0 ? (
+      <Image
+        src={item.product.productImages[0].imageUrl}
+        alt={item.product.name}
+        fill
+        sizes="80px"
+        className="object-cover"
+      />
+    ) : (
+      <div className="flex h-full w-full items-center justify-center text-xs text-zinc-400">
+        No image
+      </div>
+    )}
+  </div>
+
+  {/* Product Details */}
+  <div className="min-w-0">
+    <h2 className="font-semibold text-zinc-900">
+      {item.product.name}
+    </h2>
+
+    <p className="mt-1 text-sm text-zinc-500">
+      ${Number(item.product.price).toFixed(2)}
+    </p>
+
+    {item.variant && (
+      <div className="mt-1.5 flex flex-wrap gap-x-3 text-sm text-zinc-500">
+        {item.variant.size && (
+          <span>Size: {item.variant.size}</span>
+        )}
+
+        {item.variant.color && (
+          <span>Color: {item.variant.color}</span>
+        )}
+      </div>
+    )}
+  </div>
+</div>
 
                 <div className="flex items-center justify-between gap-6 sm:justify-end">
                   {/* Quantity */}
