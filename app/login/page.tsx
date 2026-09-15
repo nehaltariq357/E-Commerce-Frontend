@@ -27,7 +27,7 @@ const LoginPage = () => {
       //redirect based on role
       console.log("response login page:",response)
       if (response.data.role === "ADMIN") {
-        router.push("/admin/orders");
+        router.push("/admin");
       } else if (response.data.role === "USER") {
         router.push("/products");
       }else{
