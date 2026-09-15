@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+
 import {
   updateCartItem,
   removeCartItem,

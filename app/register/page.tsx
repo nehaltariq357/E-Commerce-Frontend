@@ -1,6 +1,6 @@
 
 "use client";
-
+import { toast } from "sonner"
 import React, { FormEvent, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -152,7 +152,7 @@ export default function RegisterPage() {
       });
 
       setSuccess("Registration successful! You can now login.");
-
+      toast("Registration successful!");
       setName("");
       setEmail("");
       setPassword("");

@@ -57,7 +57,8 @@ export default function CategoryForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setName("")
+    setDescription("")
     if (!name.trim()) {
       setNameError("Category name is required");
       return;

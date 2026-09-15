@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { loginUser } from "../features/auth/auth.api";
 import { setUser } from "../features/auth/authSlice";
 import { useAppDispatch } from "../store/hooks";
-
+import { toast } from "sonner"
 function AlertIcon() {
   return (
     <svg
@@ -142,7 +142,7 @@ const LoginPage = () => {
         router.push("/register");
       }
 
-      alert("Login successful");
+      toast("Login successful!");
     } catch (error) {
       setError(error instanceof Error ? error.message : "Login failed");
     } finally {

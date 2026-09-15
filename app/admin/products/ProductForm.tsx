@@ -104,6 +104,12 @@ export default function ProductForm({
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+      setName("");
+      setDescription("");
+      setSlug("");
+      setPrice("");
+      setCategoryId("");
+      setIsActive(true);
 
     const data: ProductInput = {
       name,

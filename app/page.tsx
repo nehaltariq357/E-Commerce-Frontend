@@ -6,10 +6,8 @@ import AdminProductPage from "./admin/products/page";
 
 export default function Home() {
   return (
- <div>
- {/* test */}
-{/* <AdminCategoriesPage/> */}
-{/* <AdminProductPage/> */}
- </div>
+    <>
+      <LoginPage />
+    </>
   );
 }

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
 import { setLogout} from "../features/auth/authSlice";
 import { useAppDispatch } from "../store/hooks";
-
+import { toast } from "sonner"
 
 const Logout = () => {
     const dispatch = useAppDispatch();
@@ -19,6 +19,7 @@ const Logout = () => {
             setError("");
             await logout();
             dispatch(setLogout());
+            toast("Logout successful!");
             router.push("/login");
         } catch (error) {
             setError(error instanceof Error ? error.message : "Logout failed");

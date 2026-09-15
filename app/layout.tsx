@@ -5,7 +5,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { AuthInitializer } from "./components/auth/AuthInitializer"
 import { CartInitializer } from "./components/cart/CartInitializer";
-
+import { Toaster } from "@/components/ui/sonner"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,6 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             {children}
           </AuthInitializer>
         </Providers>
+        <Toaster />
       </body>
     </html>
   );
