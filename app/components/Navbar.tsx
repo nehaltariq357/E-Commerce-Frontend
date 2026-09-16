@@ -27,7 +27,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-20 border-b border-zinc-200 bg-white/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <Link
-          href="/"
+          href="/products"
           className="text-lg font-semibold tracking-tight text-zinc-900"
           onClick={() => setIsMenuOpen(false)}
         >
