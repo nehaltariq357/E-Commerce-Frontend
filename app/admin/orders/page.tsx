@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion,type Variants } from "framer-motion";
 
 import { getAllAdminOrders } from "../../features/admin-order/admin-order.api";
 import {
@@ -74,7 +74,7 @@ function OrdersTableSkeleton() {
         {Array.from({ length: 6 }).map((_, i) => (
           <div key={i} className="flex items-center gap-4 px-4 py-4">
             <div className="h-4 w-14 animate-pulse rounded bg-zinc-100" />
-            <div className="h-9 w-9 flex-shrink-0 animate-pulse rounded-full bg-zinc-100" />
+            <div className="h-9 w-9 shrink-0 animate-pulse rounded-full bg-zinc-100" />
             <div className="h-4 flex-1 animate-pulse rounded bg-zinc-100" />
             <div className="h-4 w-16 animate-pulse rounded bg-zinc-100" />
             <div className="h-6 w-20 animate-pulse rounded-full bg-zinc-100" />
@@ -86,7 +86,7 @@ function OrdersTableSkeleton() {
   );
 }
 
-const rowVariants = {
+const rowVariants: Variants = {
   hidden: { opacity: 0, y: 6 },
   show: (i: number) => ({
     opacity: 1,
@@ -161,7 +161,7 @@ export default function AdminOrdersPage() {
       ) : (
         <div className="overflow-hidden rounded-xl border border-zinc-200">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[760px] border-collapse text-left text-sm">
+            <table className="w-full min-w-190 border-collapse text-left text-sm">
               <thead className="border-b border-zinc-200 bg-zinc-50">
                 <tr>
                   <th className="px-4 py-3 font-medium text-zinc-500">Order</th>
@@ -193,7 +193,7 @@ export default function AdminOrdersPage() {
 
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-zinc-900 text-xs font-semibold text-white">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-xs font-semibold text-white">
                             {initial}
                           </div>
                           <div className="min-w-0">

@@ -19,7 +19,7 @@ import {
 } from "../../features/address/address.types";
 import { useState } from "react";
 
-export const AddressPage = () => {
+export default function AddressPage(){
   const dispatch = useAppDispatch();
   const addresses = useAppSelector((state) => state.address.addresses);
   const isLoading = useAppSelector((state) => state.address.isLoading);

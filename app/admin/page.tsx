@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion ,type Variants} from "framer-motion";
 
 import { getDashboardStats } from "../features/admin-dashboard/admin-dashboard.api";
 import type { DashboardStats } from "../features/admin-dashboard/admin-dashboard.types";
@@ -102,7 +102,7 @@ function SummaryCard({
   );
 }
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 10 },
   show: (delay = 0) => ({
     opacity: 1,
@@ -194,7 +194,7 @@ export default function AdminDashboardPage() {
           {/* Revenue */}
           <div className="mt-4">
             {isLoading || !stats ? (
-              <div className="h-[136px] animate-pulse rounded-2xl bg-zinc-100" />
+              <div className="h-34 animate-pulse rounded-2xl bg-zinc-100" />
             ) : (
               <motion.div
                 initial="hidden"

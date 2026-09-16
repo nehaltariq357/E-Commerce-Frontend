@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion,type Variants } from "framer-motion";
 
 import {
   getAdminOrdersById,
@@ -154,7 +154,7 @@ function TruckIcon() {
 }
 function AlertIcon() {
   return (
-    <svg className="h-5 w-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+    <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m0 3.75h.008M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   );
@@ -240,7 +240,7 @@ function DetailSkeleton() {
   );
 }
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 10 },
   show: (delay = 0) => ({
     opacity: 1,
@@ -415,7 +415,10 @@ export default function AdminOrderDetailPage() {
   const allowedStatuses =
     getAllowedStatuses(order.status);
 
-  const currentStepIndex = timelineStatuses.indexOf(order.status);
+  const currentStepIndex =
+    order.status === "CANCELLED"
+      ? -1
+      : timelineStatuses.indexOf(order.status);
   const customerInitial = order.user.name?.charAt(0).toUpperCase() || "?";
 
   // ==================================
@@ -452,7 +455,7 @@ export default function AdminOrderDetailPage() {
 
         <button
           onClick={() => router.back()}
-          className="inline-flex h-9 flex-shrink-0 items-center gap-1.5 rounded-lg border border-zinc-300 px-4 text-sm font-medium text-zinc-700 transition-colors duration-150 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+          className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-zinc-300 px-4 text-sm font-medium text-zinc-700 transition-colors duration-150 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
         >
           <ArrowLeftIcon />
           Back
@@ -512,7 +515,7 @@ export default function AdminOrderDetailPage() {
                       </p>
                     </div>
 
-                    <p className="flex-shrink-0 font-medium text-zinc-900">
+                    <p className="shrink-0 font-medium text-zinc-900">
                       ${item.price}
                     </p>
                   </div>
@@ -548,7 +551,7 @@ export default function AdminOrderDetailPage() {
           <motion.div initial="hidden" animate="show" variants={fadeUp} custom={0.1}>
             <Card title="Customer" icon={<UserIcon />}>
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-zinc-900 text-sm font-semibold text-white">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-sm font-semibold text-white">
                   {customerInitial}
                 </div>
                 <div className="min-w-0">
