@@ -31,7 +31,7 @@ const Navbar = () => {
           className="text-lg font-semibold tracking-tight text-zinc-900"
           onClick={() => setIsMenuOpen(false)}
         >
-          Navbar
+          ShopEase
         </Link>
 
         {/* Desktop nav */}
