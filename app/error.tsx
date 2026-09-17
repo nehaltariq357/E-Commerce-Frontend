@@ -42,7 +42,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
           className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-900 px-5 py-3 text-sm font-medium text-white transition-all duration-150 hover:bg-zinc-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 active:scale-[0.98]"
         >
           <RefreshIcon />
-          Try again
+          Try again 
         </button>
       </motion.div>
     </div>
